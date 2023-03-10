@@ -10,6 +10,12 @@ import yaml
 import ckan.plugins as p
 
 try:
+    from ckan.lib.plugins import DefaultTranslation
+except ImportError:
+    class DefaultTranslation(object):
+        pass
+
+try:
     from paste.reloader import watch_file
 except ImportError:
     watch_file = None
@@ -127,12 +133,14 @@ class _SchemingMixin(object):
         # record our plugin instance in a place where our helpers
         # can find it:
         self._store_instance(self)
+        add_public_directory(config, 'public')
         self._add_template_directory(config)
 
         # FIXME: need to read configuration in update_config
         # because self._schemas need to be defined early for
         # IDatasetForm
         self._load_presets(config)
+
         self._is_fallback = p.toolkit.asbool(
             config.get(self.FALLBACK_OPTION, False)
         )
@@ -210,6 +218,9 @@ class SchemingDatasetsPlugin(p.SingletonPlugin, DefaultDatasetForm,
 
     def read_template(self):
         return 'scheming/package/read.html'
+
+    def read__base_template(self):
+        return 'scheming/package/read_base.html'
 
     def resource_template(self):
         return 'scheming/package/resource_read.html'

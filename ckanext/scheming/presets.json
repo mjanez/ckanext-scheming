@@ -34,6 +34,13 @@
       }
     },
     {
+      "preset_name": "tag_string_uris",
+      "values": {
+        "validators": "owner_org_validator tag_string_convert",
+        "form_snippet": "multiple_text.html"
+      }
+    },
+    {
       "preset_name": "dataset_organization",
       "values": {
         "validators": "owner_org_validator unicode_safe",

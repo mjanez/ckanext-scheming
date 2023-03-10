@@ -16,10 +16,15 @@
   </li>
 {% endmacro %}
 
-{%- set values = data.get(field.field_name, []) or ([''] * field.get('form_blanks', 1)) -%}
-{%- if values is string -%}
-  {%- set values = [values] -%}
-{%- endif -%}
+{%- set choices = data[field.field_name] -%}
+
+{% if choices is iterable and (choices is not string) %}
+  {%- set values = choices or ([''] * field.get('form_blanks', 1)) -%}
+{% elif choices is string %}
+  {%- set values = h.scheming_display_json_list(choices).strip('][').split('",') or ([''] * field.get('form_blanks', 1)) -%}
+{% else %}
+  {%- set values = [''] -%}
+{% endif %}
 
 {% call form.input_block(
   'field-' + field.field_name,
@@ -31,16 +36,22 @@
   <fieldset name="{{ field.field_name }}" class="scheming-fieldset" data-module="scheming-multiple-text">
     <ol class="multiple-text-group">
       {%- for element in values -%}
-        {{ multiple_text(element, errors[field.field_name] if loop.index == 1 else "") }}
+        {{ h.scheming_clean_json_value(multiple_text(element, errors[field.field_name] if loop.index == 1 else "")) }}
       {%- endfor -%}
     </ol>
 
-    {% set help_text = h.scheming_language_text(field.help_text) %}
-    {% if help_text %}
-      <div class="info-block mrgn-tp-md">
-        {{ help_text }}
-      </div>
-    {% endif %}
+    <div class="control-medium">
+      <a href="javascript:MultipleText.multiple_add('{{ field.field_name }}');" class="btn btn-link"
+        >{% block add_button_text %}<i class="fa fa-plus" aria-hidden="true"></i> {{ _('Add') }}{% endblock %}</a>
+    </div>
+  </fieldset>
+
+  {% set help_text = h.scheming_language_text(field.help_text) %}
+  {% if help_text %}
+    <div class="info-block mrgn-tp-md">
+      <i class="fa fa-info-circle"></i> {{ help_text }}
+    </div>
+  {% endif %}
 
     <div class="control-medium">
       <a href="javascript:MultipleText.multiple_add('{{ field.field_name }}');" class="btn btn-link"
