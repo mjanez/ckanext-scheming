@@ -1098,9 +1098,9 @@ dataset_fields:
       es: Direcciones (AD)
     value: http://inspire.ec.europa.eu/theme/ad
   - label:
-      en: Population distribution — demography (AD)
-      es: Distribución de la población - demografía (AD)
-    value: http://inspire.ec.europa.eu/theme/ad
+      en: Population distribution — demography (PD)
+      es: Distribución de la población - demografía (PD)
+    value: http://inspire.ec.europa.eu/theme/pd
   - label:
       en: Species distribution (SD)
       es: Distribución de las especies (SD)
