@@ -551,35 +551,93 @@ dataset_fields:
   required: true
   preset: date
 
+# ISO 19115 topic category (M)
+## Recommended  (GeoDCAT-AP)  / INSPIRE Mandatory as topic
+- field_name: topic
+  label: 
+    en: ISO 19115 topic category
+    es: Categoría temática ISO 19115
+  preset: select
+  display_property: dcat:keyword
+  display_snippet: link_schema.html
+  form_include_blank_choice: False
+  validators: not_empty scheming_required
+  required: true
+  sorted_choices: true
+  choices:
+  - label: biota
+    value: http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/biota
+  - label: boundaries
+    value: http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/boundaries
+  - label: climatologyMeteorologyAtmosphere
+    value: http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/climatologyMeteorologyAtmosphere
+  - label: economy
+    value: http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/economy
+  - label: elevation
+    value: http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/elevation
+  - label: environment
+    value: http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/environment
+  - label: farming
+    value: http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/farming
+  - label: geoscientificInformation
+    value: http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/geoscientificInformation
+  - label: health
+    value: http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/health
+  - label: imageryBaseMapsEarthCover
+    value: http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/imageryBaseMapsEarthCover
+  - label: inlandWaters
+    value: http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/inlandWaters
+  - label: intelligenceMilitary
+    value: http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/intelligenceMilitary
+  - label: location
+    value: http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/location
+  - label: oceans
+    value: http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/oceans
+  - label: planningCadastre
+    value: http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/planningCadastre
+  - label: society
+    value: http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/society
+  - label: structure
+    value: http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/structure
+  - label: transportation
+    value: http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/transportation
+  - label: utilitiesCommunication
+    value: http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/utilitiesCommunication
+
+  help_text:
+    en: 'eg.: Labels from <a href="http://inspire.ec.europa.eu/metadata-codelist" target="_blank" rel="noopener">Metadata code list register</a> (INSPIRE)'
+    es: 'ej: Etiquetas del <a href="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory" target="_blank" rel="noopener">Registro de listas controladas de metadatos</a> (INSPIRE)'
+  help_allow_html: True
+
 # Keyword value (M)
-## Recommended  (GeoDCAT-AP)  / INSPIRE Mandatory as keywords/topics
+## Recommended  (GeoDCAT-AP)  / INSPIRE Mandatory as keywords
 - field_name: tag_string
   label: 
     en: Keywords
     es: Palabras clave
   preset: tag_string_autocomplete
   display_property: dct:subject
-  form_placeholder: 'environment'
+  form_placeholder: 'gsaa'
   help_text:
     en: 'eg.: Labels from <a href="http://inspire.ec.europa.eu/metadata-codelist" target="_blank" rel="noopener">Metadata code list register</a> (INSPIRE)'
-    es: 'ej: Etiquetas del <a href="http://inspire.ec.europa.eu/metadata-codelist/TopicCategory" target="_blank" rel="noopener">Registro de listas controladas de metadatos</a> (INSPIRE)'
+    es: 'ej: Etiquetas del <a href="http://inspire.ec.europa.eu/metadata-codelist" target="_blank" rel="noopener">Registro de listas controladas de metadatos</a> (INSPIRE)'
   help_allow_html: True
 
 # Keyword URI (M)
-##TODO: Improve form_snippet to generate tag_uri auto from tag_string
+## TODO: Improve form_snippet to generate tag_uri auto from tag_string
 ## TODO: Add as scheming_datastore_choices (helpers.py/#102) http://github.com/ckan/ckanext-scheming/issues/270
 ## Only for ckanext-dcat profiles.py
 - field_name: tag_uri
   label: 
-    en: Topic URIs in accordance with ISO-19115/INSPIRE MD Register
-    es: URI de categorías conforme a ISO-19115/Registro INSPIRE
+    en: Keyword URIs in accordance with INSPIRE MD Register
+    es: URI de palabras clave conforme al Registro INSPIRE
   validators: ignore_missing scheming_multiple_text
   form_snippet: multiple_text.html
   display_snippet: list_keywords.html
-  form_placeholder: 'http://inspire.ec.europa.eu/metadata-codelist/TopicCategory/environment'
+  form_placeholder: 'http://inspire.ec.europa.eu/metadata-codelist/IACSData/gsaa'
   help_text:
-    en: 'eg.: Metadata code list register (INSPIRE): http://inspire.ec.europa.eu/metadata-codelist/TopicCategory'
-    es: 'ej: Registro de listas controladas de metadatos (INSPIRE): http://inspire.ec.europa.eu/metadata-codelist/TopicCategory'
+    en: 'eg.: Metadata code list register (INSPIRE): http://inspire.ec.europa.eu/metadata-codelist'
+    es: 'ej: Registro de listas controladas de metadatos (INSPIRE): http://inspire.ec.europa.eu/metadata-codelist'
 
 # TODO: Probably better include contact_role and contact_organization (boolean) to distinguish between vcard:Individual and vcard:Organizationto use in ckanext-dcat/profiles.py
 # Metadata point of contact URI (M)
