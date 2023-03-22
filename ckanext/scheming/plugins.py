@@ -135,10 +135,6 @@ class _SchemingMixin(object):
         self._store_instance(self)
         add_public_directory(config, 'public')
         self._add_template_directory(config)
-
-        # FIXME: need to read configuration in update_config
-        # because self._schemas need to be defined early for
-        # IDatasetForm
         self._load_presets(config)
 
         self._is_fallback = p.toolkit.asbool(
@@ -313,7 +309,7 @@ class SchemingDatasetsPlugin(p.SingletonPlugin, DefaultDatasetForm,
             }
             if resource_composite and 'resources' in data_dict:
                 for res in data_dict['resources']:
-                    expand_form_composite(res, resource_composite.copy())
+                    expand_form_composite(res, resource_composite)
             # convert composite package fields to extras so they are stored
             if composite_convert_fields:
                 schema = dict(
@@ -362,7 +358,7 @@ class SchemingDatasetsPlugin(p.SingletonPlugin, DefaultDatasetForm,
                 pages[:] = []
 
     def prepare_dataset_blueprint(self, package_type, bp):
-        if self._dataset_form_pages[package_type]:
+        if package_type in self._dataset_form_pages:
             bp.add_url_rule(
                 '/new',
                 'scheming_new',

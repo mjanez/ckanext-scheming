@@ -7,7 +7,7 @@
     <input
       type="text"
       name="{{ field.field_name }}"
-      value="{{ element }}"
+      value="{{ element.strip() }}"
       class="form-control"
       {{ form.attributes(field.form_attrs if 'form_attrs' in field else {}) }} />
     <a class="btn btn-default btn-multiple-remove" name="multiple-remove" href="javascript:;"
@@ -45,11 +45,4 @@
         >{% block add_button_text %}<i class="fa fa-plus" aria-hidden="true"></i> {{ _('Add') }}{% endblock %}</a>
     </div>
   </fieldset>
-
-  {% set help_text = h.scheming_language_text(field.help_text) %}
-  {% if help_text %}
-    <div class="info-block mrgn-tp-md">
-      <i class="fa fa-info-circle"></i> {{ help_text }}
-    </div>
-  {% endif %}
 {% endcall %}

@@ -49,7 +49,6 @@ def scheming_validator(fn):
 
 register_validator(unicode_safe)
 
-
 @register_validator
 def strip_value(value):
     '''

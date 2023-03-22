@@ -5,13 +5,7 @@ This CKAN extension provides a way to configure and share metadata schemas using
 YAML or JSON schema description. Custom validation and template snippets for editing
 and display are supported.
 
->**Note**:<br>
-> Use a [custom schema](/ckanext/scheming/ckan_geodcatap.yaml) based on: [GeoDCAT-AP](https://inspire.ec.europa.eu/good-practice/geodcat-ap)/[INSPIRE](https://inspire.ec.europa.eu/Technical-Guidelines2/Metadata/6541).
-
->**Warning**:<br>
-> Needs [ckanext-spatial](https://github.com/ckan/ckanext-spatial) to work.
-
-[![Tests](https://github.com/ckan/ckanext-scheming/workflows/Tests/badge.svg?branch=master)](https://github.com/ckan/ckanext-scheming/actions)
+[![Tests](https://github.com/mjanez/ckanext-scheming/workflows/Tests/badge.svg?branch=master)](https://github.com/mjanez/ckanext-scheming/actions)
 
 Table of contents:
 
@@ -43,10 +37,14 @@ Table of contents:
     - [`form_snippet`](#form_snippet)
     - [`display_snippet`](#display_snippet)
     - [`display_property`](#display_property)
+    - [`select_size`](#select_size)
+    - [`sorted_choices`](#sorted_choices)
     - [`validators`](#validators)
     - [`output_validators`](#output_validators)
     - [`create_validators`](#create_validators)
     - [`help_text`](#help_text)
+    - [`help_allow_html`](#help_allow_html)
+    - [`help_inline`](#help_inline)
 - [Action API Endpoints](#action-api-endpoints)
 - [Running the Tests](#running-the-tests)
 
@@ -55,7 +53,7 @@ Table of contents:
 Requirements
 ============
 
-This plugin is compatible with CKAN 2.8 or later.
+This plugin is compatible with CKAN 2.6 or later.
 
 
 Installation
@@ -66,7 +64,7 @@ You can install the extension with the following shell commands:
 ```sh
 cd $CKAN_VENV/src/
 
-pip install -e "git+https://github.com/ckan/ckanext-scheming.git#egg=ckanext-scheming"
+pip install -e "git+https://github.com/mjanez/ckanext-scheming.git#egg=ckanext-scheming"
 ```
 
 
@@ -104,8 +102,9 @@ scheming.dataset_fallback = false
 ```
 
 ## Schema Types
-With this plugin, you can customize the group, organization, and dataset entities in CKAN. Adding and enabling a schema will modify the forms used to update and create each entity, indicated by the respective `type` property at the root level. Such as `group_type`, `organization_type`, and `dataset_type`. Non-default types are supported properly as is indicated throughout the examples.
+With this plugin, you can customize the group, organization, and dataset entities in CKAN. Adding and enabling a schema will modify the forms used to update and create each entity, indicated by the respective `type` property at the root level. Such as `group_type`, `organization_type`, and `dataset_type`. Non-default types are supported properly in **CKAN 2.8+ only** as is indicated throughout the examples.
 
+**Creating custom group or organization types is only supported in CKAN 2.8, instructions for that are below**
 
 ## Example Schemas
 
@@ -125,13 +124,12 @@ These schemas use [presets](#preset) defined in
 Group schemas:
 
 * [Default group schema with field modifications](ckanext/scheming/group_with_bookface.json)
-* [Group with custom type](ckanext/scheming/custom_group_with_status.json)
+* [Group with custom type **(CKAN 2.8+ only)**](ckanext/scheming/custom_group_with_status.json)
 
 Organization schemas:
 
 * [Default organization schema with field modifications](ckanext/scheming/org_with_dept_id.json)
-* [Organization with custom type](ckanext/scheming/custom_org_with_address.json)
-
+* [Organization with custom type **(CKAN 2.8+ only)**](ckanext/scheming/custom_org_with_address.json)
 
 
 ## Common Schema Keys
@@ -148,8 +146,8 @@ about_url: https://github.com/link-to-my-project
 ```
 
 `about_url` is a link to human-readable information about this schema.
-ckanext-scheming [automatically publishes](#action-api-endpoints) your
-schema and this link allows users to learn more about it.
+ckanext-scheming automatically publishes your schema and this link allows users
+to learn more about it.
 
 ## Dataset Schema Keys
 
@@ -195,46 +193,19 @@ be accepted when editing or updating this type of dataset.
 ## Group / Organization Schema Keys
 
 ### `group_type`
+Examples:
+* `"group_type": "group"` used for modifying the default group schema
+* `"group_type": "theme"` an example of defining a custom group type, as seen in the above examples **(CKAN 2.8+ only)**
 
-```yaml
-group_type: group
-```
-is used for modifying the default group schema
-
-```yaml
-group_type: theme
-```
-is an example of defining a custom group type, as seen in the [example schemas above](#example-schemas)
-
-Like `dataset_type`, a `group_type` of `group` allows you to customize the default group schema under the URL `/group`, such as the modified schema in `group_with_bookface.json`, but a schema with a custom type such as `custom_group_with_status.json` schema above would appear under `/theme` instead, because its `group_type` field is set to "theme".
+Like `dataset_type`, a `group_type` of `group` allows you to customize the default group schema under the URL `/group`, such as the modified schema in group_with_bookface.json, but a schema with a custom type **(CKAN 2.8+ only)** such as `custom_group_with_status.json` schema above would appear under `/theme` instead, because its `group_type` field is set to "theme".
 
 ### `organization_type`
-
-```yaml
-organization_type: organization
-```
-is used for modifying the default organization schema
-
-```yaml
-organization_type: publisher
-```
-is an example of defining a custom organization type, as seen in the [example schemas above](#example-schemas)
+Examples:
+* `"organization_type": "organization"` used for modifying the default organization schema
+* `"organization_type": "publisher"` an example of defining a custom organization type, as seen in the above examples **(CKAN 2.8+ only)**
 
 ### `fields`
-
-```yaml
-fields:
-
-- field_name: title
-  label: Name
-  form_snippet: large_text.html
-  form_attrs:
-    data_module: slug-preview-target
-  form_placeholder: My Organization
-
-...
-```
-A single `fields` list replaces the `dataset_fields` and `resource_fields` schema properties doin dataset schemas.
+The `dataset_fields` and `resource_fields` schema properties don't exist in group or organization schemas. Instead, they just have a `fields` property.
 
 
 ----------------
@@ -258,6 +229,8 @@ New field names should follow the current lowercase_with_underscores
  naming convention. Don't name your field `mySpecialField`, use
  `my_special_field` instead.
 
+This value is available to the form snippet as `field.field_name`.
+
 
 ### `label`
 
@@ -267,39 +240,36 @@ This label may be a string or an object providing multiple
 language versions:
 
 ```yaml
-- field_name: title
-  label:
-    en: Title
-    fr: Titre
+label:
+  en: Title
+  fr: Titre
 ```
 
 When using a plain string translations will be provided with gettext:
 
 ```yaml
-- field_name: title
-  label: Title
+label: Title
 ```
 
 
 ### `repeating_subfields`
 
 This field is the parent of group of repeating subfields. The value is
-a list of fields entered the same way as normal fields.
+a list of fields entered the same way as normal fields. **CKAN 2.8+ only**
 
-> **_NOTE:_** CKAN needs an IPackageController plugin with `before_index` to
-> convert repeating subfields to formats that can be indexed by solr. For
-> testing you may use the included `scheming_nerf_index` plugin to encode
-> all repeating fields as JSON strings to prevent solr errors.
+CKAN needs an IPackageController plugin with `before_index` to
+convert repeating subfields to formats that can be indexed by solr. For
+testing you may use the included `scheming_nerf_index` plugin to encode
+all repeating fields as JSON strings to prevent solr errors.
 
 `repeating_label` may be used to provide a singular version of the label
 for each group.
 
 ```yaml
-- field_name: contacts
-  label: Contacts
-  repeating_label: Contact
-  repeating_subfields:
-
+field_name: contacts
+label: Contacts
+repeating_label: Contact
+repeating_subfields:
   - field_name: address
     label: Address
     required: true
@@ -315,9 +285,9 @@ for each group.
 ### `start_form_page`
 
 Dataset fields may be divided into separate form pages for creation
-and editing. **_CKAN 2.9+ only_**. Form pages for `dataset` type
-only supported by **_CKAN 2.10+_** or with https://github.com/ckan/ckan/pull/7032
-. Adding `start_form_page` to a field marks this field as the start of a
+and editing. **CKAN 2.9+ feature only**. Form pages for `dataset` type
+only supported by CKAN 2.10+ or with https://github.com/ckan/ckan/pull/7032
+. Adding this key to a field marks this field as the start of a
 new page of fields.
 
 
@@ -326,33 +296,25 @@ new page of fields.
     title: Detailed Metadata
     description:
       These fields improve search and give users important links
-
-  field_name: address
-  label: Address
 ```
 
 A title and description should be provided to help with navigation.
 These values may be strings or objects providing multiple
 language versions of text.
 
-
 ### `required`
 
-```yaml
-  required: true
-```
-
-Use for fields that must be included. Set to `false` or
+Use `required: true` for fields that must be included. Set to `false` or
 don't include this key for fields that are optional.
 
 Setting to `true` will mark the field as required in the editing form
 and include `not_empty` in the default validators that will be applied
 when `validators` is not specified.
 
-> **_NOTE:_** To honor this settings with custom validators include `scheming_required`
-> as the first validator. `scheming_required` will check the required
-> setting for this field and apply either the `not_empty` or `ignore_missing`
-> validator.
+To honor this settings with custom validators include `scheming_required`
+as the first validator. `scheming_required` will check the required
+setting for this field and apply either the `not_empty` or `ignore_missing`
+validator.
 
 
 ### `choices`
@@ -364,37 +326,12 @@ each element (may be multiple languages like a [field label](#label))
 and `value`s that will be stored in the dataset or resource:
 
 ```yaml
-- field_name: category
-  preset: select
-  choices:
-  - value: bactrian
-    label: Bactrian Camel
-  - value: hybrid
-    label: Hybrid Camel
-```
-
-For storing non-string values see [output_validators](#output_validators).
-
-For required `select` fields you may also want to add this setting
-so that users are forced to choose an item in the form, otherwise the first
-choice will be selected in the form by default:
-
-```yaml
-  form_include_blank_choice: true
-```
-
-To set the number of choices displayed in the `multiple_select`
-[form](#form_snippet) snippets use:
-
-```yaml
-  select_size: 5
-```
-
-To sort choices alphabetically in [form](#form_snippet)
-and [display](#display_snippet) snippets use:
-
-```yaml
-  sorted_choices: true
+preset: select
+choices:
+- value: bactrian
+  label: Bactrian Camel
+- value: hybrid
+  label: Hybrid Camel
 ```
 
 ### `choices_helper`
@@ -407,112 +344,59 @@ You may [register your own helper function](https://docs.ckan.org/en/2.8/theming
 `scheming_datastore_choices` helper included in ckanext-scheming:
 
 ```yaml
-- field_name: country
-  preset: select
-  choices_helper: scheming_datastore_choices
-  datastore_choices_resource: countries-resource-id-or-alias
-  datastore_choices_columns:
-    value: Country Code
-    label: English Country Name
-  datastore_additional_choices:
-  - value: none
-    label: None
-  - value: na
-    label: N/A
+preset: select
+choices_helper: scheming_datastore_choices
+datastore_choices_resource: countries-resource-id-or-alias
+datastore_choices_columns:
+  value: Country Code
+  label: English Country Name
+datastore_additional_choices:
+- value: none
+  label: None
+- value: na
+  label: N/A
 ```
 
 
 ### `preset`
 
-A `preset` specifies a set of default values for other field keys. They
-allow reuse of definitions for validation and snippets for common field types.
+A `preset` specifies a set of default values for these field keys. They
+are used to define validation and snippets for common field
+types.
 
-This extension includes the following presets in [presets.json](ckanext/scheming/presets.json):
+This extension includes the following presets:
 
-```yaml
-  preset: title
-```
-title validation and large text form snippet
-
-```yaml
-  preset: select
-```
-validation that choice is from [choices](#choices), form select box and display snippet
-
-```yaml
-  preset: radio
-```
-validation that choice is from [choices](#choices), form radio buttons group and display snippet
-
-```yaml
-  preset: multiple_checkbox
-```
-multiple choice from [choices](#choices) rendered as checkboxes in the form, stored as a list of values
-
-```yaml
-  preset: multiple_select
-```
-multiple choice from [choices](#choices) rendered as a multiple select box in the form, stored as a list of values
-
-```yaml
-  preset: multiple_text
-```
-repeating text field with add and remove buttons, stored as a list of strings
-
-```yaml
-  preset: date
-```
-date validation and form snippet
-
-```yaml
-  preset: datetime
-```
-date and time validation and form snippet
-
-```yaml
-  preset: dataset_slug
-```
-dataset slug validation and form snippet that autofills the value from the title field
-
-```yaml
-  preset: tag_string_autocomplete
-```
-tag string validation and form autocomplete
-
-```yaml
-  preset: dataset_organization
-```
-organization validation and form select box
-
-```yaml
-  preset: resource_url_upload
-```
-resource url validaton and link/upload form field
-
-```yaml
-  preset: resource_format_autocomplete
-```
-resource format validation and form autocomplete
-
-```yaml
-  preset: organization_url_upload
-```
-organization url validaton and link/upload form field
-format guessing based on url and autocompleting form field
-
-```yaml
-  preset: json_object
-```
-JSON based input. Only JSON objects are supported. The input JSON will be loaded during output (eg when loading the dataset in a template or via the API
-
-```yaml
-  preset: markdown
-```
-markdown text area and display
+* `preset: title` - title validation and large text form snippet
+* `preset: select` - validation that choice is from [choices](#choices),
+  form select box and display snippet
+* `preset: radio` - validation that choice is from [choices](#choices),
+  form radio buttons group and display snippet
+* `preset: multiple_checkbox` - multiple choice from [choices](#choices)
+  rendered as checkboxes in the form, stored as a list of values
+* `preset: multiple_select` - multiple choice from [choices](#choices)
+  rendered as a multiple select box in the form, stored as a list of values
+* `preset: multiple_text` - repeating text field with add and remove
+  buttons, stored as a list of strings
+* `preset: date` - date validation and form snippet
+* `preset: datetime` date and time validation and form snippet
+* `preset: dataset_slug` - dataset slug validation and form snippet that
+  autofills the value from the title field
+* `preset: tag_string_autocomplete` - tag string validation and form autocomplete
+* `preset: dataset_organization` - organization validation and form select box
+* `preset: resource_url_upload` - resource url validaton and link/upload form
+  field
+* `preset: resource_format_autocomplete` - resource format validation with
+* `preset: organization_url_upload` - organization url validaton and link/upload form
+  field
+  format guessing based on url and autocompleting form field
+* `preset: json_object` - JSON based input. Only JSON objects are supported.
+  The input JSON will be loaded during output (eg when loading the dataset in
+  a template or via the API).
+* `preset: markdown` - markdown text area and display
 
 
-You may define your own presets by adding additional files to the `scheming.presets`
-[configuration setting](#configuration).
+You may add your own presets by adding them to the `scheming.presets`
+configuration setting.
 
 
 ### `form_snippet`
@@ -557,6 +441,22 @@ If `display_snippet: null` is used the field will be removed from the view page.
 
 Set a `property` attribute on dataset fields displayed as "Additional Info", useful for adding RDF markup.
 
+### `select_size`
+
+```yaml
+select_size: 5
+```
+
+Set to the number of [choices](#choices) to display in the multiple_select
+[form](#form_snippet) snippets.
+
+
+### `sorted_choices`
+
+Set to `"true"` to sort [choices](#choices) alphabetically in [form](#form_snippet)
+and [display](#display_snippet) snippets.
+
+
 ### `validators`
 
 The `validators` value is a space-separated string of validator and
@@ -566,7 +466,7 @@ passing the comma-separated values within as string parameters
 and the result is used as the validator/converter.
 
 ```yaml
-  validators: if_empty_same_as(name) unicode_safe
+validators: if_empty_same_as(name) unicode_safe
 ```
 
 is the same as a plugin using the validators:
@@ -579,8 +479,9 @@ This string does not contain arbitrary python code to be executed,
 you may only use registered validator functions, optionally calling
 them with static string values provided.
 
-> **_NOTE:_** ckanext-scheming automatically adds calls to `convert_to_extras`
-> for extra fields when required.
+This extension automatically adds calls to `convert_to_extras`
+for new extra fields,
+so you should not add that to this list.
 
 New validators and converters may be added using the
 [IValidators plugin interface](http://docs.ckan.org/en/latest/extensions/plugin-interfaces.html?highlight=ivalidator#ckan.plugins.interfaces.IValidators).
@@ -596,31 +497,13 @@ lists available validators ready to be used.
 
 ### `output_validators`
 
-Internally all extra fields are stored as strings. If you are attempting to save and restore other types of data you will need to use output validators.
-
-For example if you use a simple "yes/no" question, you will need to let ckanext-scheming know that this data needs to be stored *and retrieved* as a boolean. This is acheieved using [`validators`](#validators) and [`output_validators`](#output_validators) keys.
-
-```
-  - field_name: is_camel_friendly
-    label: Is this camel friendly?
-    required: true
-    preset: select
-    choices:
-      - value: false
-        label: "No"
-      - value: true
-        label: "Yes"
-    validators: scheming_required boolean_validator
-    output_validators: boolean_validator
-```
-
 The `output_validators` value is like `validators` but used when
 retrieving values from the database instead of when saving them.
 These validators may be used to transform the data before it is
 sent to the user.
 
-> **_NOTE:_** ckanext-scheming automatically adds calls to `convert_from_extras`
-> for extra fields when required.
+This extension automatically adds calls to `convert_from_extras`
+for extra fields so you should not add that to this list.
 
 ### `create_validators`
 
@@ -629,38 +512,27 @@ create only.
 
 ### `help_text`
 
-```yaml
-  help_text: License definitions and additional information
-```
-
-If this key is supplied, its value will be shown after the field as help text.
+Only if this key is supplied, its value will be shown as inline help text,
+Help text must be plain text, no markdown or HTML are allowed.
 Help text may be provided in multiple languages like [label fields](#label).
 
-Help text must be plain text, no markdown or HTML are allowed unless:
-
-```yaml
-  help_allow_html: true
-```
+### `help_allow_html`
 
 Allow HTML inside the help text if set to `true`. Default is `false`.
 
-Adjust the position of `help_text` with:
+### `help_inline`
 
-```yaml
-  help_inline: true
-```
-
-Display help text inline (next to the field) if set to `true`. Default is `false` (display help text under the field).
+Display help text inline if set to `true`. Default is `false`.
 
 Action API Endpoints
 ====================
 
 The extension adds action endpoints which expose any configured schemas via:
-https://github.com/ckan/ckanext-scheming/blob/master/ckanext/scheming/logic.py
+https://github.com/mjanez/ckanext-scheming/blob/master/ckanext/scheming/logic.py
 
 Some examples:
 
-Calling `http://localhost:5000/api/3/action/scheming_dataset_schema_list`
+Calling http://localhost:5000/api/3/action/scheming_dataset_schema_list
 
 Returns:
 
@@ -675,7 +547,9 @@ Returns:
 }
 ```
 
-Calling `http://localhost:5000/api/3/action/scheming_dataset_schema_show?type=dataset`
+Individual datasets can be called via [data_dict](https://docs.ckan.org/en/latest/maintaining/datastore.html#data-dictionary).
+
+Calling http://localhost:5000/api/3/action/scheming_dataset_schema_show?type=dataset
 
 Returns:
 
@@ -694,7 +568,7 @@ Returns:
 }
 ```
 
-The full list of API actions are available in [ckanext/scheming/logic.py](https://github.com/ckan/ckanext-scheming/blob/master/ckanext/scheming/logic.py)
+The full list of API actions are available in [ckanext/scheming/logic.py](https://github.com/mjanez/ckanext-scheming/blob/master/ckanext/scheming/logic.py)
 
 
 Running the Tests
