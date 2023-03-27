@@ -2,6 +2,7 @@ import json
 import datetime
 from collections import defaultdict
 import itertools
+from urllib.parse import urlparse
 
 import pytz
 import six
@@ -496,3 +497,23 @@ def repeating_text_output(value):
         return json.loads(value)
     except ValueError:
         return [value]
+
+@register_validator
+def scheming_valid_url(value: str) -> str:
+    """
+    Check if value is a valid URL string
+    """
+    def check_url(url):
+        try:
+            result = urlparse(url)
+            return all([result.scheme, result.netloc])
+        except ValueError:
+            return False
+    
+    if not isinstance(value, six.string_types):
+        raise Invalid(_('URL must be a string'))
+    try:
+        if check_url(value):
+            return value
+    except (ValueError) as e:
+        raise Invalid(_('URL must be a string'))

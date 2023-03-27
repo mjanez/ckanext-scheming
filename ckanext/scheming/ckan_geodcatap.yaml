@@ -892,7 +892,7 @@ dataset_fields:
     en: Means the history of a data set, and the life cycle from collection and acquisition through compilation and derivation to its current form, in accordance with EN ISO-19101.
     es: Historia de un conjunto de datos y su ciclo de vida desde su recogida y adquisición hasta su compilación y derivación hasta su forma actual, con arreglo a la norma EN ISO-19101.
 # Conformity (M)
-##TODO: Separar Conformity en (conforms_to, epsg y metadata_profile) añadirlo también al serializador RDF
+##TODO: Separar Conformity en (conforms_to, reference_system y metadata_profile) añadirlo también al serializador RDF
 - field_name: conforms_to
   label: 
     en: Conformity 
@@ -904,8 +904,8 @@ dataset_fields:
   display_snippet: list_links.html
   form_placeholder: 'http://inspire.ec.europa.eu/documents/commission-regulation-eu-no-13122014-10-december-2014-amending-regulation-eu-no-10892010-0'
   help_text:
-    en: 'Implementing rule (eg. INSPIRE) or other specification (eg. EPSG).URLs eg.: http://inspire.ec.europa.eu/documents/commission-regulation-eu-no-13122014-10-december-2014-amending-regulation-eu-no-10892010-0'
-    es: 'Conformidad con normativas (Reglamento INSPIRE) o especificaciones (ej. EPSG). URLs e.j:http://inspire.ec.europa.eu/documents/commission-regulation-eu-no-13122014-10-december-2014-amending-regulation-eu-no-10892010-0'
+    en: 'Implementing rule (eg. INSPIRE) or other specification.URLs eg.: http://inspire.ec.europa.eu/documents/commission-regulation-eu-no-13122014-10-december-2014-amending-regulation-eu-no-10892010-0'
+    es: 'Conformidad con normativas (Reglamento INSPIRE) o especificaciones. URLs e.j:http://inspire.ec.europa.eu/documents/commission-regulation-eu-no-13122014-10-december-2014-amending-regulation-eu-no-10892010-0'
 
 # Metadata standard (M)
 ##TODO: metadata_profile
@@ -1289,7 +1289,17 @@ dataset_fields:
   help_allow_html: True
 
 # Coordinate Reference System (M)
-##TODO: epsg
+- field_name: reference_system
+  label:
+    en: URI of the Coordinate Reference System
+    es: URI del Sistema de Referencia de Coordenadas
+  validators: ignore_missing scheming_valid_url
+  display_snippet: link.html
+  form_placeholder: http://www.opengis.net/def/crs/EPSG/0/4326
+  help_text:
+    en: 'EPSG URI system for identifying position in the real world [ISO 19112]. The URI prefix for coordinate reference systems is the following one: http://www.opengis.net/def/crs/EPSG/0/{EPSG Code}'
+    es: 'URI EPSG del sistema para identificar la posición en el mundo real [ISO 19112]. El prefijo URI para los sistemas de referencia de coordenadas es el siguiente: http://www.opengis.net/def/crs/EPSG/0/{Código EPSG}'
+  help_allow_html: True
 
 # Geographic bounding box (M)
 - field_name: spatial
@@ -2249,7 +2259,17 @@ resource_fields:
     es: 'Especificaciones (eg. OGC). URLs'
 
 # Coordinate Reference System (C)
-##TODO: epsg
+- field_name: reference_system
+  label:
+    en: URI of the Coordinate Reference System
+    es: URI del Sistema de Referencia de Coordenadas
+  validators: ignore_missing scheming_valid_url
+  display_snippet: link.html
+  form_placeholder: http://www.opengis.net/def/crs/EPSG/0/4326
+  help_text:
+    en: 'EPSG URI system for identifying position in the real world [ISO 19112]. The URI prefix for coordinate reference systems is the following one: http://www.opengis.net/def/crs/EPSG/0/{EPSG Code}'
+    es: 'URI EPSG del sistema para identificar la posición en el mundo real [ISO 19112]. El prefijo URI para los sistemas de referencia de coordenadas es el siguiente: http://www.opengis.net/def/crs/EPSG/0/{Código EPSG}'
+  help_allow_html: True
 
 # Lineage statement (O)
 ##TODO: provenance
