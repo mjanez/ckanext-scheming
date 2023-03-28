@@ -1851,8 +1851,8 @@ dataset_fields:
   sorted_choices: true
   choices:
   - label:
-      en: Rejilla
-      es: Grid
+      en: Grid
+      es: Rejilla
     value: http://inspire.ec.europa.eu/metadata-codelist/SpatialRepresentationType/grid
   - label:
       en: Stereo model
