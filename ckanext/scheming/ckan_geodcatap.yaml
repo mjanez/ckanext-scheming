@@ -645,7 +645,7 @@ dataset_fields:
   label:
     en: URI of the Metadata contact point
     es: URI del punto de contacto de los metadatos
-  display_snippet: link.html
+  display_snippet: link_name.html
   form_placeholder: http://orgs.vocab.org/some-org
 
 # Metadata point of contact name (M)
@@ -713,7 +713,7 @@ dataset_fields:
   label:
     en: URI of the publisher
     es: URI del publicador
-  display_snippet: link.html
+  display_snippet: link_name.html
   form_snippet: publisher_uri.html
   form_placeholder: http://orgs.vocab.org/some-org
   help_text:
@@ -788,7 +788,7 @@ dataset_fields:
   label:
     en: Identifier of the dataset maintainer
     es: Identificador del mantenedor
-  display_snippet: link.html
+  display_snippet: link_name.html
   form_placeholder: http://datos.gob.es/recurso/sector-publico/org/Organismo/E05068001
   help_text:
     en: "Unique identifier of the publisher. Spain: Unique identifier (DIR3) of the public organization (<a href='http://datos.gob.es/es/recurso/sector-publico/org/Organismo' target='_blank'>datos.gob.es</a>)."
@@ -832,7 +832,7 @@ dataset_fields:
   label:
     en: Identifier of the dataset creator
     es: Identificador del autor
-  display_snippet: link.html
+  display_snippet: link_name.html
   form_placeholder: http://datos.gob.es/recurso/sector-publico/org/Organismo/E05068001
   help_text:
     en: "Unique identifier of the publisher. Spain: Unique identifier (DIR3) of the public organization (<a href='http://datos.gob.es/es/recurso/sector-publico/org/Organismo' target='_blank'>datos.gob.es</a>)."
