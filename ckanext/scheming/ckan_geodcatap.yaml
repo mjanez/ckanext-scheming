@@ -1294,7 +1294,7 @@ dataset_fields:
     en: URI of the Coordinate Reference System
     es: URI del Sistema de Referencia de Coordenadas
   validators: ignore_missing scheming_valid_url
-  display_snippet: link.html
+  display_snippet: link_epsg.html
   form_placeholder: http://www.opengis.net/def/crs/EPSG/0/4326
   help_text:
     en: 'EPSG URI system for identifying position in the real world [ISO 19112]. The URI prefix for coordinate reference systems is the following one: http://www.opengis.net/def/crs/EPSG/0/{EPSG Code}'
@@ -2264,7 +2264,7 @@ resource_fields:
     en: URI of the Coordinate Reference System
     es: URI del Sistema de Referencia de Coordenadas
   validators: ignore_missing scheming_valid_url
-  display_snippet: link.html
+  display_snippet: link_epsg.html
   form_placeholder: http://www.opengis.net/def/crs/EPSG/0/4326
   help_text:
     en: 'EPSG URI system for identifying position in the real world [ISO 19112]. The URI prefix for coordinate reference systems is the following one: http://www.opengis.net/def/crs/EPSG/0/{EPSG Code}'
