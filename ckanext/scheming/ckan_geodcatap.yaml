@@ -2066,13 +2066,13 @@ resource_fields:
       es: Experimental
     value: http://publications.europa.eu/resource/authority/planned-availability/EXPERIMENTAL
   - label:
-      en: Experimental
-      es: Experimental
-    value: http://publications.europa.eu/resource/authority/planned-availability/EXPERIMENTAL
-  - label:
       en: Provisional data
       es: Datos provisionales
     value: http://publications.europa.eu/resource/authority/planned-availability/OP_DATPRO
+  - label:
+      en: Temporary
+      es: Temporal
+    value: http://publications.europa.eu/resource/authority/planned-availability/TEMPORARY
   help_text:
     en: 'This property indicates how long it is planned to keep the Distribution of the Dataset available acording to <a href="http://publications.europa.eu/resource/authority/planned-availability" target="_blank" rel="noopener">Distribution availability vocabulary</a>.'
     es: 'Esta propiedad indica durante cuánto tiempo se prevé mantener disponible la distribución del conjunto de datos de acuerdo con el <a href="http://publications.europa.eu/resource/authority/planned-availability" target="_blank" rel="noopener">Vocabulario de disponibilidad de la distribución</a>.'
