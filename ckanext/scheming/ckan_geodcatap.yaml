@@ -891,8 +891,8 @@ dataset_fields:
   form_placeholder:
     en: Means the history of a data set, and the life cycle from collection and acquisition through compilation and derivation to its current form, in accordance with EN ISO-19101.
     es: Historia de un conjunto de datos y su ciclo de vida desde su recogida y adquisición hasta su compilación y derivación hasta su forma actual, con arreglo a la norma EN ISO-19101.
+
 # Conformity (M)
-##TODO: Separar Conformity en (conforms_to, reference_system y metadata_profile) añadirlo también al serializador RDF
 - field_name: conforms_to
   label: 
     en: Conformity 
@@ -908,7 +908,19 @@ dataset_fields:
     es: 'Conformidad con normativas (Reglamento INSPIRE) o especificaciones. URLs e.j:http://inspire.ec.europa.eu/documents/commission-regulation-eu-no-13122014-10-december-2014-amending-regulation-eu-no-10892010-0'
 
 # Metadata standard (M)
-##TODO: metadata_profile
+- field_name: metadata_profile
+  label:
+    en: Metadata Standard
+    es: Perfil de Metadatos
+  validators: ignore_missing scheming_multiple_text
+  required: False
+  form_snippet: multiple_text.html
+  display_property: dct:conformsTo
+  display_snippet: list_links.html
+  form_placeholder: 'http://semiceu.github.io/GeoDCAT-AP/releases/2.0.0'
+  help_text:
+    en: 'URI(s) of the Metadata profile used'
+    es: 'URI(s) del perfil de Metadatos utilizado'
 
 # Temporal start (O)
 - field_name: temporal_start
@@ -1107,8 +1119,16 @@ dataset_fields:
     es: 'URI que identifica al recurso relacionado. Se pueden incluir tantas propiedades como referencias se conozcan.'
 
 # Character encoding (C)
-##TODO: encoding
-## default: UTF-8
+- field_name: encoding
+  label:
+    en: Character encoding
+    es: Codificación
+  display_property: cnt:characterEncoding
+  form_placeholder: UTF-8
+  help_text:
+    en: 'Character encoding in ISO-19115 metadata is specified with a code list that can be mapped to the corresponding codes in <a href="https://www.iana.org/assignments/character-sets" target="_blank" rel="noopener">[IANA-CHARSETS]</a>'
+    es: 'La codificación de caracteres en los metadatos ISO-19115 se especifica con una lista de códigos que puede asignarse a los códigos correspondientes en <a href="https://www.iana.org/assignments/character-sets" target="_blank" rel="noopener">[IANA-CHARSETS]</a>.'
+  help_allow_html: True
 
 ##TODO: temporal_resolution
 ## ISO 8601: http://www.google.com/url?q=http://www.w3.org/TR/xmlschema11-2/%23duration&sa=D&source=editors&ust=1677159514756434&usg=AOvVaw3Xyh6wn0UVcwFCy3-_9P8i
@@ -2131,8 +2151,16 @@ resource_fields:
   help_allow_html: True
 
 # Resource character encoding (C)
-##TODO: encoding
-## default: UTF-8
+- field_name: encoding
+  label:
+    en: Character encoding
+    es: Codificación
+  display_property: cnt:characterEncoding
+  form_placeholder: UTF-8
+  help_text:
+    en: 'Character encoding in ISO-19115 metadata is specified with a code list that can be mapped to the corresponding codes in <a href="https://www.iana.org/assignments/character-sets" target="_blank" rel="noopener">[IANA-CHARSETS]</a>'
+    es: 'La codificación de caracteres en los metadatos ISO-19115 se especifica con una lista de códigos que puede asignarse a los códigos correspondientes en <a href="https://www.iana.org/assignments/character-sets" target="_blank" rel="noopener">[IANA-CHARSETS]</a>.'
+  help_allow_html: True
 
 # Resource language (M)
 - field_name: language
