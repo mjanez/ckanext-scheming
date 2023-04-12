@@ -17,6 +17,7 @@
     'issued',
     'modified',
     'encoding',
+    'valid',
   ] -%}
 
   {#
@@ -134,12 +135,14 @@
         'author',
         'author_email',
         'author_uri',
+        'author_url',
       ] -%}
 
       {%- set maintainer_fields = [
         'maintainer',
         'maintainer_email',
         'maintainer_uri',
+        'maintainer_url',
       ] -%}
 
 {% block package_additional_info %}
@@ -147,7 +150,7 @@
   <table class="table table-striped table-bordered table-condensed" style="margin-top:20px">
   <thead>
     <tr>
-      <td scope="row" colspan="2"><h3><center>{{ _('Identification') }}</center></h3></td>
+      <td scope="row" colspan="2"><h3><center>{{ _('Additional Info') }}</center></h3></td>
     </tr>
   </thead>
   <tbody>
