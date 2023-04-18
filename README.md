@@ -6,7 +6,7 @@ YAML or JSON schema description. Custom validation and template snippets for edi
 and display are supported.
 
 >**Note**:<br>
-> Use a [custom schema](/ckanext/scheming/ckan_geodcatap.yaml) based on: [GeoDCAT-AP](https://inspire.ec.europa.eu/good-practice/geodcat-ap)/[INSPIRE](https://inspire.ec.europa.eu/Technical-Guidelines2/Metadata/6541).
+> Use a [custom schema](/ckanext/scheming/ckan_geodcatap.yaml) based on: [GeoDCAT-AP](https://inspire.ec.europa.eu/good-practice/geodcat-ap)/[INSPIRE](https://inspire.ec.europa.eu/Technical-Guidelines2/Metadata/6541) for the spanish context ([NTI-RISP](https://datos.gob.es/en/documentacion/guia-de-aplicacion-de-la-norma-tecnica-de-interoperabilidad-de-reutilizacion-de)).
 
 >**Warning**:<br>
 > Needs [ckanext-spatial](https://github.com/ckan/ckanext-spatial) to work.
