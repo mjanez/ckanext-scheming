@@ -15,7 +15,7 @@
   <ul class="{{ _class }}">
     {%- for val, label in choices -%}
       {%- if val in spatial_uris_list -%}
-        {%- set img_url = h.url_for_static('/images/icons/theme_es/spain.svg') -%}
+        {%- set img_url = h.url_for_static('/images/icons/theme_es/sector/spain.svg') -%}
           <li>
             <img src="{{ img_url }}" title="{{ label }}" alt="{{ label }}" class="{{ _class }}-icon"></img> <a href="{{ val }}">{{ label }}</a>
           </li>
