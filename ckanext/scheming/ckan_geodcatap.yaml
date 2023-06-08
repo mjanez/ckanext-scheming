@@ -146,7 +146,7 @@ dataset_fields:
     en: Themes (NTI-RISP)
     es: Temáticas (NTI-RISP)
   validators: ignore_missing scheming_multiple_choice
-  form_snippet: multiple_select.html
+  form_snippet: multiple_select_icon.html
   display_property: dcat:theme
   display_snippet: multiple_choice_icon.html
   select_size: 10
@@ -1149,7 +1149,7 @@ dataset_fields:
     en: INSPIRE Themes
     es: Temas INSPIRE
   validators: ignore_missing scheming_multiple_choice
-  form_snippet: multiple_select.html
+  form_snippet: multiple_select_icon.html
   display_property: dcat:theme
   display_snippet: multiple_choice_icon.html
   select_size: 10
