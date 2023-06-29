@@ -146,9 +146,9 @@ dataset_fields:
     en: Themes (NTI-RISP)
     es: Temáticas (NTI-RISP)
   validators: ignore_missing scheming_multiple_choice
-  form_snippet: multiple_select.html
+  form_snippet: multiple_select_icon.html
   display_property: dcat:theme
-  display_snippet: themes_es.html
+  display_snippet: multiple_choice_icon.html
   select_size: 10
   required: True
   help_text:
@@ -1149,9 +1149,9 @@ dataset_fields:
     en: INSPIRE Themes
     es: Temas INSPIRE
   validators: ignore_missing scheming_multiple_choice
-  form_snippet: multiple_select.html
+  form_snippet: multiple_select_icon.html
   display_property: dcat:theme
-  display_snippet: themes.html
+  display_snippet: multiple_choice_icon.html
   select_size: 10
   help_text:
     en: '<a href="http://inspire.ec.europa.eu/theme" target="_blank" rel="noopener">Themes</a> (INSPIRE)'
@@ -1331,7 +1331,7 @@ dataset_fields:
   display_property: dct:spatial
   form_placeholder: '{"type": "Polygon", "coordinates": [[[-18.27, 27.54], [4.44, 27.54], [4.44, 43.85], [-18.27, 43.85], [-18.27, 27.54]]]}'
   help_text:
-    en: '<a href="https://boundingbox.klokantech.com" target="_blank" rel="noopener">Draw BBox and copy GEOJSON with "coordinates" value. eg. {"type": "Polygon", "coordinates": [[[-18.27, 27.54], [4.44, 27.54], [4.44, 43.85], [-18.27, 43.85], [-18.27, 27.54]]]}</a> Only "geometry" dict with "type" and "coordinates" elements. More information at <a href="http://geojson.org/geojson-spec.html#bounding-boxes" target="_blank" rel="noopener">GeoJSON bounding boxes</a>.'
+    en: '<a href="https://boundingbox.klokantech.com" target="_blank" rel="noopener">Draw BBox and copy GEOJSON with "coordinates" value. eg. {"type": "Polygon", "coordinates": [[[-18.27, 27.54], [4.44, 27.54], [4.44, 43.85], [-18.27, 43.85], [-18.27, 27.54]]]}</a>.'
     es: '<a href="https://boundingbox.klokantech.com" target="_blank" rel="noopener">Dibuja el BBox y copia el GEOJSON con el valor de "coordinates". ej. {"type": "Polygon", "coordinates": [[[-18.27, 27.54], [4.44, 27.54], [4.44, 43.85], [-18.27, 43.85], [-18.27, 27.54]]]}. </a> Solo es necesario el diccionario "geometry" con los elementos "type" y "coordinates". Más información en <a href="http://geojson.org/geojson-spec.html#bounding-boxes" target="_blank" rel="noopener">GeoJSON bounding boxes</a>.'
   help_allow_html: True
 
@@ -1343,7 +1343,7 @@ dataset_fields:
   validators: ignore_missing
   form_snippet: select.html
   display_property: dcat:theme
-  display_snippet: spatial_uris.html
+  display_snippet: select_icon.html
   select_size: 10
   sorted_choices: true
   choices:
