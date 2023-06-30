@@ -63,10 +63,10 @@ class TestDatasetDisplay(object):
             contact_email = "fake@fakesite.fake",
             dcat_type = "http://inspire.ec.europa.eu/metadata-codelist/ResourceType/dataset",
             identifier = "123e4567-e89b-12d3-a456-426614174000",
-            languaje = "http://publications.europa.eu/resource/authority/language/SPA",
+            language = "http://publications.europa.eu/resource/authority/language/SPA",
             topic = "biota",
             notes = "# styled notes",
-            date = datetime.datetime.now(),
+            created = datetime.datetime.now(),
             modified = datetime.datetime.now()
         )
 
