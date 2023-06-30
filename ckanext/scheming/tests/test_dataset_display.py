@@ -1,4 +1,5 @@
 import pytest
+import datetime
 import six
 from ckantoolkit.tests.factories import Sysadmin, Dataset
 
@@ -56,10 +57,17 @@ class TestDatasetDisplay(object):
     def test_notes_field_displayed(self, app):
         user = Sysadmin()
         Dataset(
-            user=user,
-            type="dataset",
-            name="plain-jane",
-            notes="# styled notes",
+            user = user,
+            type = "dataset",
+            name = "plain-jane",
+            contact_email = "fake@fakesite.fake",
+            dcat_type = "http://inspire.ec.europa.eu/metadata-codelist/ResourceType/dataset",
+            identifier = "123e4567-e89b-12d3-a456-426614174000",
+            languaje = "http://publications.europa.eu/resource/authority/language/SPA",
+            topic = "biota",
+            notes = "# styled notes",
+            date = datetime.datetime.now(),
+            modified = datetime.datetime.now()
         )
 
         response = app.get("/dataset/plain-jane")
